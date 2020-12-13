@@ -1,0 +1,13 @@
+{
+  "api_version": "1",
+  "api_scheme": "https",
+  "api_host": "api.movearound.fit",
+  "api_prefix": "v3",
+  "maxDistance": 200.0,
+  "minDistance": 2.0,
+  "site_notice_url": "https://movearound.fit/impressum",
+  "privacy_url": "https://movearound.fit/datenschutz",
+  "feedback_email": "info@movearound.fit",
+  "mapbox_api_token": "pk.eyJ1IjoibW92ZWFyb3VuZCIsImEiOiJjazY3MHU3MHMwM2k2M2RzZHc1a2s4aGJ0In0.iA5QqV87Ct3uGMRJ8bjvhQ",
+  "public_base_url": "https://movearound-production.s3.eu-central-1.amazonaws.com/"
+}
