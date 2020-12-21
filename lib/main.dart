@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tinji/bloc/authentication_bloc.dart';
+import 'package:tinji/bloc/authentication/authentication_bloc.dart';
 import 'package:tinji/repositories/user_repository.dart';
 import 'package:tinji/screens/home.dart';
 import 'package:tinji/screens/login.dart';
@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
         title: 'Tinji',
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
-            print(state);
             if (state is AuthenticationAuthenticated) {
               return Home();
             }

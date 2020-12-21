@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../utils/api_client.dart';
+
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('hjoojjo0');
+    ApiClient _client = ApiClient();
 
     return Scaffold(
       appBar: AppBar(
@@ -12,13 +14,12 @@ class Login extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Email',
               ),
-              onSaved: (value){
+              onSaved: (value) {
                 print(value);
               },
             ),
@@ -26,15 +27,19 @@ class Login extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Password',
               ),
-              onSaved: (value){
+              obscureText: true,
+              onSaved: (value) {
                 print(value);
               },
             ),
-            OutlineButton(
-              child: Text('Login'),
-              onPressed: () {
-
-              },
+            SizedBox(
+              width: double.infinity,
+              child: OutlineButton(
+                child: Text('Login'),
+                onPressed: () {
+                  print('jooo');
+                },
+              ),
             ),
           ],
         ),

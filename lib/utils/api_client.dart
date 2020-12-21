@@ -19,7 +19,7 @@ class ApiClient {
     );
   }
 
-  Future<http.Response> _getRequest(Uri uri) async {
+  Future<http.Response> getRequest(Uri uri) async {
     return await http.get(uri, headers: _getHeader());
   }
 
