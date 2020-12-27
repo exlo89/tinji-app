@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tinji/models/user.dart';
 
 class Storage {
   static final _singleton = Storage._internal();
@@ -20,4 +21,5 @@ class Storage {
   //====== AUTH ======
   String accessToken;
   bool isLoggedIn;
+  User user;
 }

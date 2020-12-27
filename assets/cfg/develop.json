@@ -1,4 +1,4 @@
 {
-  "api_scheme": "https",
-  "api_host": "api.exlo-dev.de",
+  "api_scheme": "http",
+  "api_host": "tinji.test"
 }
