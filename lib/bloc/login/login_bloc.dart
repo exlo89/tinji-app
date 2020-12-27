@@ -38,7 +38,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         authenticationBloc.add(AuthenticationLoggedIn(token: token));
         yield LoginSuccess();
       } catch (error) {
-        print(error);
         yield LoginFailure(error: error);
       }
     }
@@ -50,7 +49,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await authenticationRepository.deleteToken();
         authenticationBloc.add(AuthenticationLoggedOut());
       } catch (error) {
-        print(error);
         yield LoginFailure(error: error);
       }
     }

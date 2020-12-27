@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tinji/utils/api_client.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:tinji/utils/api_routes.dart';
 
 class AuthenticationProvider {
@@ -19,9 +19,8 @@ class AuthenticationProvider {
         'email': email,
         'password': password,
       };
-      http.Response response = await apiClient.post(ApiRoutes.login, data);
-      Map jsonResponse = json.decode(response.body);
-      print(jsonResponse);
+      Response response = await apiClient.get('test', data);
+      Map jsonResponse = json.decode(response.data);
       print(jsonResponse);
       return jsonResponse['access_token'];
     } catch (error) {
