@@ -1,6 +1,28 @@
+import 'package:dio/dio.dart';
+import 'package:tinji/data_provider/user_provider.dart';
+import 'package:tinji/models/user.dart';
 import 'package:tinji/utils/storage.dart';
 
 class UserRepository {
+  final UserProvider userProvider = UserProvider();
+
+  Future<String> authentication({String email, String password}) async {
+    try {
+      String token = await userProvider.login(email, password);
+      writeToken(token);
+      Storage().accessToken = token;
+      Storage().user = await getUser();
+      Storage().isLoggedIn = true;
+      return token;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<User> getUser() async {
+      return await userProvider.getUser();
+  }
+
   /// delete from keystore/keychain
   Future<void> deleteToken() async {
     await Storage().secureStorage.delete(key: 'access_token');

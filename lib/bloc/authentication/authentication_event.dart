@@ -12,7 +12,7 @@ class AuthenticationAppStarted extends AuthenticationEvent {}
 class AuthenticationLoggedIn extends AuthenticationEvent {
   final String token;
 
-  const AuthenticationLoggedIn({@required this.token});
+  const AuthenticationLoggedIn({this.token});
 
   @override
   List<Object> get props => [token];

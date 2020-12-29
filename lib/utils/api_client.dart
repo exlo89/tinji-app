@@ -23,48 +23,46 @@ class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options) {
-          // Do something before request is sent
-          print('======request=======');
-          print(options);
-          print(options.headers);
-          print(options.uri);
-          options.headers["Authorization"] = "Bearer " + Storage().accessToken;
+          //print('======request=======');
+          //print(options.uri);
+          if (Storage().accessToken != null || Storage().accessToken != '') {
+            options.headers["Authorization"] = "Bearer " + Storage().accessToken;
+          }
           return options;
         },
         onResponse: (Response response) {
-          // Do something with response data
-          print('======response=======');
-          print(response);
-          print(response.headers);
-          print(response.statusCode);
+          //print('======response=======');
+          //print(response);
           return response; // continue
         },
         onError: (DioError error) async {
           // Do something with response error
           print('======error=======');
           print(error.message);
-          print(error.type);
-          print(error.response);
           return error;
         },
       ),
     );
   }
 
-  Uri _buildUri(String route, [Map<String, String> param = const {}]) {
-    return Uri(
-      scheme: GlobalConfiguration().getValue('api_scheme'),
-      host: GlobalConfiguration().getValue('api_host'),
-      path: 'api/' + route,
-      queryParameters: param,
+  Future<Response> get(String route) async {
+    return await _dio.get(
+      route,
+      onReceiveProgress: (int received, int total) {
+        int percentage = ((received / total) * 100).floor();
+        // TODO print("$percentage");
+      },
     );
   }
 
-  Future<Response> get(String route, [Map<String, String> param = const {}]) async {
-    return await _dio.get(route);
-  }
-
-  Future<Response> post(String route, [Map<String, String> body = const {}]) async {
-    return await _dio.post(route, data: jsonEncode(body));
+  Future<Response> post(String route, FormData data) async {
+    return await _dio.post(
+      route,
+      data: data,
+      onSendProgress: (int sent, int total) {
+        int percentage = ((sent / total) * 100).floor();
+        //TODO print("$percentage");
+      },
+    );
   }
 }
