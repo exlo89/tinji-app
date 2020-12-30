@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinji/bloc/notification/messenger_bloc.dart';
 import 'package:tinji/repositories/user_repository.dart';
+import 'package:tinji/screens/error_page.dart';
 import 'package:tinji/screens/home.dart';
 import 'package:tinji/screens/login.dart';
 import 'package:tinji/screens/register.dart';
@@ -17,6 +19,7 @@ class Tinji extends StatefulWidget {
 class _TinjiState extends State<Tinji> {
   AuthenticationBloc _authenticationBloc;
   LoginBloc _loginBloc;
+  MessengerBloc _messengerBloc;
 
   UserRepository _userRepository;
 
@@ -32,6 +35,7 @@ class _TinjiState extends State<Tinji> {
       userRepository: _userRepository,
       authenticationBloc: _authenticationBloc,
     );
+    _messengerBloc = MessengerBloc();
 
     // trigger app start event
     _authenticationBloc.add(AuthenticationAppStarted());
@@ -42,6 +46,7 @@ class _TinjiState extends State<Tinji> {
   void dispose() {
     _authenticationBloc.close();
     _loginBloc.close();
+    _messengerBloc.close();
     super.dispose();
   }
 
@@ -51,6 +56,7 @@ class _TinjiState extends State<Tinji> {
       providers: [
         BlocProvider<AuthenticationBloc>(create: (context) => _authenticationBloc),
         BlocProvider<LoginBloc>(create: (context) => _loginBloc),
+        BlocProvider<MessengerBloc>(create: (context) => _messengerBloc),
       ],
       child: MultiRepositoryProvider(
         providers: [
@@ -67,7 +73,7 @@ class _TinjiState extends State<Tinji> {
                 return Login();
               }
               if (state is AuthenticationFailure) {
-                return SplashPage();
+                return ErrorPage();
               }
               return Center(
                 child: CircularProgressIndicator(),
