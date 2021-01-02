@@ -28,7 +28,8 @@ dependencies:
   flutter_secure_storage: ^3.3.5
   dio: ^3.0.10
   flutter_bloc: ^6.0.0
-  rxdart: ^0.25.0
+  form_field_validator: ^1.0.1
+  rounded_loading_button: ^1.0.18
   equatable: ^1.2.3
 
 dev_dependencies:

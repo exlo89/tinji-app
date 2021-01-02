@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:tinji/bloc/authentication/authentication_bloc.dart';
+import 'package:tinji/blocs/authentication/authentication_bloc.dart';
 import 'package:tinji/repositories/user_repository.dart';
 
 part 'login_event.dart';
@@ -30,17 +30,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
 
         authenticationBloc.add(AuthenticationLoggedIn(token: token));
-        yield LoginSuccess();
-      } catch (error) {
-        yield LoginFailure(error: error);
-      }
-    }
-
-    // logout
-    if (event is LogoutButtonPressed) {
-      yield LoginInProgress();
-      try {
-        authenticationBloc.add(AuthenticationLoggedOut());
         yield LoginSuccess();
       } catch (error) {
         yield LoginFailure(error: error);

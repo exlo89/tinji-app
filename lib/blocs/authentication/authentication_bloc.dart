@@ -18,6 +18,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   @override
   Stream<AuthenticationState> mapEventToState(AuthenticationEvent event) async* {
+    print(event);
     // on app start
     if (event is AuthenticationAppStarted) {
       final bool hasToken = await userRepository.hasToken();

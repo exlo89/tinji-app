@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:tinji/data_provider/user_provider.dart';
 import 'package:tinji/models/user.dart';
 import 'package:tinji/utils/storage.dart';

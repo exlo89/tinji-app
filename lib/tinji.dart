@@ -1,17 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tinji/bloc/notification/messenger_bloc.dart';
 import 'package:tinji/repositories/user_repository.dart';
-import 'package:tinji/screens/error_page.dart';
 import 'package:tinji/screens/home.dart';
 import 'package:tinji/screens/login.dart';
 import 'package:tinji/screens/register.dart';
-import 'package:tinji/screens/splash_page.dart';
 
-import 'bloc/authentication/authentication_bloc.dart';
-import 'bloc/login/login_bloc.dart';
+import 'blocs/authentication/authentication_bloc.dart';
+import 'blocs/login/login_bloc.dart';
+import 'blocs/messenger/messenger_bloc.dart';
 
 class Tinji extends StatefulWidget {
+
   @override
   _TinjiState createState() => _TinjiState();
 }
@@ -41,7 +41,6 @@ class _TinjiState extends State<Tinji> {
     _authenticationBloc.add(AuthenticationAppStarted());
   }
 
-
   @override
   void dispose() {
     _authenticationBloc.close();
@@ -64,27 +63,42 @@ class _TinjiState extends State<Tinji> {
         ],
         child: MaterialApp(
           title: 'Tinji',
-          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
+          home: BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              print(state);
               if (state is AuthenticationAuthenticated) {
-                return Home();
+                Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
               }
               if (state is AuthenticationUnauthenticated) {
-                return Login();
+                Navigator.of(context).pushNamedAndRemoveUntil('login', (route) => false);
               }
-              if (state is AuthenticationFailure) {
-                return ErrorPage();
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
             },
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
           routes: {
             'home': (context) => Home(),
             'register': (context) => Register(),
             'login': (context) => Login(),
           },
+          theme: ThemeData(
+            primaryColor: Color(0xff028E9B),
+            primaryColorDark: Color(0xff015C65),
+            accentColor: Color(0xff133CAC),
+            backgroundColor: Color(0xffeeeeee),
+            buttonTheme: ButtonThemeData(
+                height: 50,
+                minWidth: double.infinity,
+                buttonColor: Color(0xff028E9B),
+                textTheme: ButtonTextTheme.primary),
+            inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(),
+              labelStyle: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
         ),
       ),
     );

@@ -1,7 +1,6 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:tinji/models/user.dart';
 import 'package:tinji/utils/api_client.dart';
 
@@ -20,6 +19,8 @@ class UserProvider {
       Response response = await apiClient.post(ApiRoutes.login, formData);
       return response.data['access_token'];
     } catch (error) {
+      print('sfsdfsdf');
+      print(error);
       throw error;
     }
   }
