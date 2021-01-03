@@ -17,6 +17,7 @@ class ApiClient {
   init() async {
     _dio = new Dio();
     _dio.options.baseUrl = await GlobalConfiguration().getValue('api_host');
+    _dio.options.contentType = Headers.formUrlEncodedContentType;
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options) {

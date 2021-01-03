@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class StandardFormField extends StatelessWidget {
   final String label;
   final bool obscureText;
+  final Function onSave;
+  final TextEditingController controller;
 
   const StandardFormField({
     Key key,
     @required this.label,
     this.obscureText = false,
+    this.onSave,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -19,9 +23,8 @@ class StandardFormField extends StatelessWidget {
           labelText: label,
         ),
         obscureText: obscureText,
-        onSaved: (value) {
-          print(value);
-        },
+        onSaved: onSave,
+        controller: controller,
       ),
     );
   }

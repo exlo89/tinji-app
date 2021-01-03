@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:tinji/blocs/login/login_bloc.dart';
 import 'package:tinji/components/standard_button.dart';
 import 'package:tinji/components/standard_form_field.dart';
@@ -7,6 +8,11 @@ import 'package:tinji/components/standard_form_field.dart';
 class Login extends StatelessWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final _passwordValidator = MultiValidator([
+    RequiredValidator(errorText: 'password is required'),
+    MinLengthValidator(8, errorText: 'password must be at least 8 digits long'),
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +35,7 @@ class Login extends StatelessWidget {
           if (state is LoginInProgress) {
             return Center(child: CircularProgressIndicator());
           }
+
           return SingleChildScrollView(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -48,19 +55,22 @@ class Login extends StatelessWidget {
                     ),
                     StandardFormField(
                       label: 'Email',
+                      controller: _emailController,
                     ),
                     StandardFormField(
                       label: 'Password',
+                      controller: _passwordController,
                       obscureText: true,
                     ),
                     StandardButton(
                       child: Text('login'),
                       onPressed: () {
+                        print(_emailController.text);
                         if (state is !LoginInProgress) {
                           BlocProvider.of<LoginBloc>(context).add(
                             LoginButtonPressed(
-                              email: 'admin@test.de',
-                              password: 'password',
+                              email: _emailController.text,
+                              password: _passwordController.text,
                             ),
                           );
                         }
