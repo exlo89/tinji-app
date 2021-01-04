@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:tinji/models/user.dart';
 import 'package:tinji/utils/api_client.dart';
@@ -12,15 +10,13 @@ class UserProvider {
   /// authentication with username(email) and password
   Future<String> login(String email, String password) async {
     try {
-      FormData formData = new FormData.fromMap({
+      Response response = await apiClient.post(ApiRoutes.login, {
         'email': email,
         'password': password,
       });
-      Response response = await apiClient.post(ApiRoutes.login, formData);
+
       return response.data['access_token'];
     } catch (error) {
-      print('sfsdfsdf');
-      print(error);
       throw error;
     }
   }

@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(Storage().user.name),
       ),
       body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {

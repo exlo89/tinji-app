@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:tinji/utils/storage.dart';
@@ -17,7 +19,9 @@ class ApiClient {
   init() async {
     _dio = new Dio();
     _dio.options.baseUrl = await GlobalConfiguration().getValue('api_host');
-    _dio.options.contentType = Headers.formUrlEncodedContentType;
+    _dio.options.headers['content-Type'] = 'application/x-www-form-urlencoded';
+    _dio.options.headers['accept'] = 'application/json';
+    _dio.options.headers['X-localization'] = 'de';
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options) {
@@ -36,8 +40,11 @@ class ApiClient {
         onError: (DioError error) async {
           // Do something with response error
           //print('======error=======');
-          //print(error.response.data['message']);
-          return error.response.data['message'];
+          if (error.response.data['message'] != null) {
+            return error.response.data['message'];
+          } else {
+            return 'Something went wrong.';
+          }
         },
       ),
     );
@@ -57,7 +64,7 @@ class ApiClient {
     }
   }
 
-  Future<Response> post(String route, FormData data) async {
+  Future<Response> post(String route, Map<String ,String> data) async {
     try {
       return await _dio.post(
         route,
