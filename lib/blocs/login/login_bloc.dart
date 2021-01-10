@@ -35,5 +35,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginFailure(error: error);
       }
     }
+
+    // register
+    if (event is RegisterButtonPressed) {
+      yield LoginInProgress();
+      try {
+        String token = await userRepository.register(
+          name: event.name,
+          email: event.email,
+          password: event.password,
+          passwordConfirmation: event.passwordConfirmation,
+        );
+
+        authenticationBloc.add(AuthenticationLoggedIn(token: token));
+        yield LoginSuccess();
+      } catch (error) {
+        yield LoginFailure(error: error);
+      }
+    }
   }
 }

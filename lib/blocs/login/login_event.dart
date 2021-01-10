@@ -21,4 +21,21 @@ class LoginButtonPressed extends LoginEvent {
   List<Object> get props => [email, password];
 }
 
+class RegisterButtonPressed extends LoginEvent {
+  final String name;
+  final String email;
+  final String password;
+  final String passwordConfirmation;
+
+  const RegisterButtonPressed({
+    @required this.name,
+    @required this.email,
+    @required this.password,
+    @required this.passwordConfirmation,
+  });
+
+  @override
+  List<Object> get props => [name, email, password, passwordConfirmation];
+}
+
 class LogoutButtonPressed extends LoginEvent {}

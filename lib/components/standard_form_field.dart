@@ -5,6 +5,7 @@ class StandardFormField extends StatelessWidget {
   final bool obscureText;
   final Function onSave;
   final TextEditingController controller;
+  final FormFieldValidator validator;
 
   const StandardFormField({
     Key key,
@@ -12,6 +13,7 @@ class StandardFormField extends StatelessWidget {
     this.obscureText = false,
     this.onSave,
     this.controller,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class StandardFormField extends StatelessWidget {
         obscureText: obscureText,
         onSaved: onSave,
         controller: controller,
+        validator: validator,
       ),
     );
   }

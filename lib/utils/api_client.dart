@@ -19,7 +19,7 @@ class ApiClient {
   init() async {
     _dio = new Dio();
     _dio.options.baseUrl = await GlobalConfiguration().getValue('api_host');
-    _dio.options.headers['content-Type'] = 'application/x-www-form-urlencoded';
+    _dio.options.headers['content-Type'] = 'application/json';
     _dio.options.headers['accept'] = 'application/json';
     _dio.options.headers['X-localization'] = 'de';
     _dio.interceptors.add(

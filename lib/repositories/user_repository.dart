@@ -18,8 +18,21 @@ class UserRepository {
     }
   }
 
+  Future<String> register({String name, String email, String password, String passwordConfirmation}) async {
+    try {
+      String token = await userProvider.register(name, email, password, passwordConfirmation);
+      writeToken(token);
+      Storage().accessToken = token;
+      Storage().user = await getUser();
+      Storage().isLoggedIn = true;
+      return token;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<User> getUser() async {
-      return await userProvider.getUser();
+    return await userProvider.getUser();
   }
 
   /// delete from keystore/keychain

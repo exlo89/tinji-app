@@ -65,8 +65,7 @@ class Login extends StatelessWidget {
                     StandardButton(
                       child: Text('login'),
                       onPressed: () {
-                        print(_emailController.text);
-                        if (state is !LoginInProgress) {
+                        if (state is! LoginInProgress) {
                           BlocProvider.of<LoginBloc>(context).add(
                             LoginButtonPressed(
                               email: _emailController.text,
@@ -75,6 +74,12 @@ class Login extends StatelessWidget {
                           );
                         }
                       },
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('register');
+                      },
+                      child: Text('registrieren'),
                     ),
                   ],
                 ),

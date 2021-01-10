@@ -21,6 +21,22 @@ class UserProvider {
     }
   }
 
+  /// register with name, email and password
+  Future<String> register(String name, String email, String password, String passwordConfirmation) async {
+    try {
+      Response response = await apiClient.post(ApiRoutes.register, {
+        'name': name,
+        'email': email,
+        'password': password,
+        'password_confirmation': password,
+      });
+
+      return response.data['access_token'];
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /// get user data
   Future<User> getUser() async {
     try {

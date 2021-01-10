@@ -65,7 +65,6 @@ class _TinjiState extends State<Tinji> {
           title: 'Tinji',
           home: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              print(state);
               if (state is AuthenticationAuthenticated) {
                 Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
               }
