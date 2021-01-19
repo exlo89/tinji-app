@@ -1,4 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tinji/models/match_user.dart';
+import 'package:tinji/models/tinji_match.dart';
 import 'package:tinji/models/user.dart';
 
 class Storage {
@@ -22,4 +24,6 @@ class Storage {
   String accessToken;
   bool isLoggedIn;
   User user;
+  List<User> matchUsers;
+  List<TinjiMatch> matches;
 }

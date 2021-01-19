@@ -4,8 +4,10 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:tinji/blocs/login/login_bloc.dart';
 import 'package:tinji/components/standard_button.dart';
 import 'package:tinji/components/standard_form_field.dart';
+import 'package:tinji/screens/register_stepper.dart';
 
 class Register extends StatelessWidget {
+  static final route = 'register';
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -33,7 +35,7 @@ class Register extends StatelessWidget {
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
-            Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
+            Navigator.of(context).pushNamedAndRemoveUntil(RegisterStepper.route, (route) => false);
           }
           if (state is LoginFailure) {
             Scaffold.of(context).showSnackBar(

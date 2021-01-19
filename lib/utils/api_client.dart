@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:tinji/utils/storage.dart';
@@ -18,7 +16,7 @@ class ApiClient {
 
   init() async {
     _dio = new Dio();
-    _dio.options.baseUrl = await GlobalConfiguration().getValue('api_host');
+    _dio.options.baseUrl = GlobalConfiguration().getValue('api_host');
     _dio.options.headers['content-Type'] = 'application/json';
     _dio.options.headers['accept'] = 'application/json';
     _dio.options.headers['X-localization'] = 'de';

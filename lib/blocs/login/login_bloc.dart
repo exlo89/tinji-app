@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tinji/blocs/authentication/authentication_bloc.dart';
 import 'package:tinji/repositories/user_repository.dart';
+import 'package:tinji/utils/storage.dart';
 
 part 'login_event.dart';
 
@@ -46,8 +47,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           password: event.password,
           passwordConfirmation: event.passwordConfirmation,
         );
-
-        authenticationBloc.add(AuthenticationLoggedIn(token: token));
+        await userRepository.writeToken(token);
+        Storage().isLoggedIn = true;
         yield LoginSuccess();
       } catch (error) {
         yield LoginFailure(error: error);

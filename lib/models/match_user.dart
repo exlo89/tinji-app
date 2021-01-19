@@ -1,11 +1,11 @@
 // To parse this JSON data, do
 //
-//     final user = userFromMap(jsonString);
+//     final matchUser = matchUserFromMap(jsonString);
 
 import 'dart:convert';
 
-class User {
-  User({
+class MatchUser {
+  MatchUser({
     this.id,
     this.name,
     this.email,
@@ -33,17 +33,17 @@ class User {
   final String emoji2;
   final String emoji3;
   final String emoji4;
-  final dynamic profilePhotoPath;
-  final dynamic deletedAt;
+  final String profilePhotoPath;
+  final String deletedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String profilePhotoUrl;
 
-  factory User.fromJson(String str) => User.fromMap(json.decode(str));
+  factory MatchUser.fromJson(String str) => MatchUser.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromMap(Map<String, dynamic> json) => User(
+  factory MatchUser.fromMap(Map<String, dynamic> json) => MatchUser(
     id: json["id"] == null ? null : json["id"],
     name: json["name"] == null ? null : json["name"],
     email: json["email"] == null ? null : json["email"],

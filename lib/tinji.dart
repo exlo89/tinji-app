@@ -1,22 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tinji/blocs/authentication/authentication_bloc.dart';
+import 'package:tinji/blocs/login/login_bloc.dart';
+import 'package:tinji/blocs/messenger/messenger_bloc.dart';
 import 'package:tinji/repositories/user_repository.dart';
 import 'package:tinji/screens/home.dart';
 import 'package:tinji/screens/login.dart';
 import 'package:tinji/screens/register.dart';
-
-import 'blocs/authentication/authentication_bloc.dart';
-import 'blocs/login/login_bloc.dart';
-import 'blocs/messenger/messenger_bloc.dart';
+import 'package:tinji/screens/splash.dart';
+import 'package:tinji/utils/routes.dart';
 
 class Tinji extends StatefulWidget {
-
   @override
   _TinjiState createState() => _TinjiState();
 }
 
 class _TinjiState extends State<Tinji> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
   AuthenticationBloc _authenticationBloc;
   LoginBloc _loginBloc;
   MessengerBloc _messengerBloc;
@@ -63,24 +65,23 @@ class _TinjiState extends State<Tinji> {
         ],
         child: MaterialApp(
           title: 'Tinji',
-          home: BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              if (state is AuthenticationAuthenticated) {
-                Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
-              }
-              if (state is AuthenticationUnauthenticated) {
-                Navigator.of(context).pushNamedAndRemoveUntil('login', (route) => false);
-              }
-            },
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-          routes: {
-            'home': (context) => Home(),
-            'register': (context) => Register(),
-            'login': (context) => Login(),
+          navigatorKey: _navigatorKey,
+          routes: routes,
+          builder: (context, child) {
+            // listen to the authentication state and route to home or login
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                if (state is AuthenticationAuthenticated) {
+                  _navigatorKey.currentState.pushNamedAndRemoveUntil(Home.route, (route) => false);
+                }
+                if (state is AuthenticationUnauthenticated) {
+                  _navigatorKey.currentState.pushNamedAndRemoveUntil(Login.route, (route) => false);
+                }
+              },
+              child: child,
+            );
           },
+          onGenerateRoute: (_) => Splash.route(),
           theme: ThemeData(
             primaryColor: Color(0xff028E9B),
             primaryColorDark: Color(0xff015C65),
